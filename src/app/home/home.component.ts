@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceOrderService } from '../services/service-order.service';
+import { ServiceOrderViewModel } from '../models/serviceOrder-view-model';
 
 @Component({
   selector: 'app-home',
@@ -10,11 +11,13 @@ import { ServiceOrderService } from '../services/service-order.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
+  public serviceOrders: ServiceOrderViewModel[] = [];
+  
   constructor(private serviceOrderService: ServiceOrderService) {}
   
   ngOnInit(): void {
     this.serviceOrderService.getAll().subscribe((response: any) => {
-      console.log(response);
+      this.serviceOrders = response;
     });
   }
 
