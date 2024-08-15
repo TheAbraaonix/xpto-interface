@@ -7,6 +7,6 @@ export class ServiceOrderViewModel {
     public serviceTitle: string = "";
     public serviceDate: Date = new Date();
     public serviceValue: number = 0;
-    public serviceClient: ClientViewModel = new ClientViewModel();
+    public client: ClientViewModel = new ClientViewModel();
     public serviceExecuter: ServiceExecuterViewModel = new ServiceExecuterViewModel();
 }

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceOrderService } from '../services/service-order.service';
 import { ServiceOrderViewModel } from '../models/serviceOrder-view-model';
+import { CurrencyPipe, DatePipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [NgFor, NgIf, CurrencyPipe, DatePipe],
   providers: [ServiceOrderService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -20,5 +21,4 @@ export class HomeComponent implements OnInit {
       this.serviceOrders = response;
     });
   }
-
 }
