@@ -16,6 +16,10 @@ export class ServiceOrderService {
         return this.http.get<ServiceOrderViewModel[]>(`${this.urlApi}/GetAllServiceOrder`);
     }
 
+    public getById(id: string): Observable<ServiceOrderViewModel> {
+        return this.http.get<ServiceOrderViewModel>(`${this.urlApi}/GetServiceOrderById/${id}`);
+    }
+
     public create(serviceOrder: ServiceOrderInputModel): Observable<ServiceOrderViewModel> {
         return this.http.post<ServiceOrderViewModel>(`${this.urlApi}/CreateServiceOrder`, serviceOrder);
     }
