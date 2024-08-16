@@ -46,7 +46,6 @@ export class CreateServiceOrderComponent {
     
     this.serviceOrderService.create(serviceOrder).subscribe({
       next: (response: ServiceOrderViewModel) => {
-        this.success();
       }
     });
   }
