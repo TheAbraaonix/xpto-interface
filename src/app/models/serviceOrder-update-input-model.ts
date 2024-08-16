@@ -1,0 +1,11 @@
+import { ClientViewModel } from "./client-view-model";
+import { ServiceExecuterViewModel } from "./serviceExecuter-view-model";
+
+export class ServiceOrderUpdateInputModel {
+    public serviceNumber: number = 0;
+    public serviceTitle: string = "";
+    public serviceDate: Date = new Date();
+    public serviceValue: number = 0;
+    public client: ClientViewModel = new ClientViewModel();
+    public serviceExecuter: ServiceExecuterViewModel = new ServiceExecuterViewModel();
+}

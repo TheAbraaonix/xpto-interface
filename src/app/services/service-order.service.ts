@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ServiceOrderViewModel } from "../models/serviceOrder-view-model";
 import { ServiceOrderInputModel } from "../models/serviceOrder-input-model";
+import { ServiceOrderUpdateInputModel } from "../models/serviceOrder-update-input-model";
 
 @Injectable({
     providedIn: 'root'
@@ -26,5 +27,9 @@ export class ServiceOrderService {
 
     public delete(id: string): Observable<any> {
         return this.http.delete(`${this.urlApi}/DeleteServiceOrder/${id}`);
+    }
+
+    public update(id: string, serviceOrder: ServiceOrderUpdateInputModel): Observable<any> {
+        return this.http.put(`${this.urlApi}/UpdateServiceOrder/${id}`, serviceOrder);
     }
 }

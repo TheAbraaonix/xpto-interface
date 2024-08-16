@@ -4,30 +4,57 @@ import { ServiceOrderService } from '../services/service-order.service';
 import { ServiceOrderViewModel } from '../models/serviceOrder-view-model';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import * as bootstrap from 'bootstrap'; 
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ServiceOrderUpdateInputModel } from '../models/serviceOrder-update-input-model';
 
 @Component({
   selector: 'app-detail-service-order',
   standalone: true,
-  imports: [CurrencyPipe, DatePipe],
-  providers: [ServiceOrderService],
+  imports: [CurrencyPipe, DatePipe, ReactiveFormsModule],
+  providers: [ServiceOrderService, DatePipe],
   templateUrl: './detail-service-order.component.html',
   styleUrl: './detail-service-order.component.css'
 })
 export class DetailServiceOrderComponent implements OnInit {
   public serviceOrder: ServiceOrderViewModel = new ServiceOrderViewModel();
+  public updateForm: FormGroup;
+  private initialFormValue: any;
   
   constructor(
     private route: ActivatedRoute,
     private serviceOrderService: ServiceOrderService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private datePipe: DatePipe
+  ) {
+    this.updateForm = new FormGroup({
+      title: new FormControl(null, [Validators.required]),
+      date: new FormControl(null, [Validators.required]),
+      value: new FormControl(null, [Validators.required]),
+      clientCpf: new FormControl(null, [Validators.required, Validators.maxLength(11), Validators.minLength(11)]),
+      clientName: new FormControl(null, [Validators.required]),
+      serviceExecuterCnpj: new FormControl(null, [Validators.required, Validators.maxLength(14), Validators.minLength(14)]),
+      serviceExecuterName: new FormControl(null, [Validators.required]),
+    });
+  }
   
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.serviceOrderService.getById(params["id"]).subscribe({
         next: (response: ServiceOrderViewModel) => {
           this.serviceOrder = response;
-          console.log(this.serviceOrder);
+          const covertedDate = this.datePipe.transform(this.serviceOrder.serviceDate, "yyyy-MM-dd");
+          
+          this.updateForm.setValue({
+            title: this.serviceOrder.serviceTitle,
+            date: covertedDate,
+            value: this.serviceOrder.serviceValue,
+            clientCpf: this.serviceOrder.client.cpf,
+            clientName: this.serviceOrder.client.name,
+            serviceExecuterCnpj: this.serviceOrder.serviceExecuter.cnpj,
+            serviceExecuterName: this.serviceOrder.serviceExecuter.name
+          });
+
+          this.initialFormValue = this.updateForm.value;
         },
         error: (error: any) => {
           console.log(error);
@@ -54,5 +81,35 @@ export class DetailServiceOrderComponent implements OnInit {
         console.log(error);
       }
     });
+  }
+
+  isFormUnchanged(): boolean {
+    return JSON.stringify(this.initialFormValue) === JSON.stringify(this.updateForm.value);
+  }
+
+  update(): void {
+    let serviceOrderUpdateInputModel = new ServiceOrderUpdateInputModel();
+    serviceOrderUpdateInputModel.serviceTitle = this.updateForm.value.title;
+    serviceOrderUpdateInputModel.serviceDate = this.updateForm.value.date;
+    serviceOrderUpdateInputModel.serviceValue = this.updateForm.value.value;
+    serviceOrderUpdateInputModel.serviceNumber = this.serviceOrder.serviceNumber;
+    serviceOrderUpdateInputModel.client.id = this.serviceOrder.client.id;
+    serviceOrderUpdateInputModel.client.cpf = this.updateForm.value.clientCpf;
+    serviceOrderUpdateInputModel.client.name = this.updateForm.value.clientName;
+    serviceOrderUpdateInputModel.serviceExecuter.id = this.serviceOrder.serviceExecuter.id;
+    serviceOrderUpdateInputModel.serviceExecuter.cnpj = this.updateForm.value.serviceExecuterCnpj;
+    serviceOrderUpdateInputModel.serviceExecuter.name = this.updateForm.value.serviceExecuterName;
+
+    this.serviceOrderService.update(this.serviceOrder.id, serviceOrderUpdateInputModel).subscribe({
+      next: (response: any) => {
+      },
+      error: (error: any) => {
+        console.log(error);
+      }});
+  }
+
+  public success(): void {
+    this.updateForm.reset();
+    this.router.navigate(["/"]);
   }
 }
