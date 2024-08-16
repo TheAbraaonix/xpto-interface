@@ -3,6 +3,7 @@ import { ServiceOrderService } from '../services/service-order.service';
 import { ServiceOrderViewModel } from '../models/serviceOrder-view-model';
 import { CurrencyPipe, DatePipe, NgFor, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,21 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.serviceOrderService.getAll().subscribe((response: any) => {
       this.serviceOrders = response;
+    });
+  }
+
+  public delete(id: string): void {
+    this.serviceOrderService.delete(id).subscribe((response: any) => {
+      const deleteModal = document.getElementById('deleteModal');
+
+      if (deleteModal) {
+        const modal = bootstrap.Modal.getOrCreateInstance(deleteModal);
+        modal?.hide();
+      }
+
+      document.body.classList.remove('modal-open');
+      document.querySelectorAll('.modal-backdrop').forEach((backdrop) => backdrop.remove());
+      window.location.reload();
     });
   }
 }
