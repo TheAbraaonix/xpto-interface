@@ -5,7 +5,7 @@
                 <h2 class="text-center">Service Orders</h2>
             </div>
             <hr>
-            <div>
+            <div *ngIf="serviceOrders.length > 0; else noServiceOrdersDisplay">
                 <ul *ngFor="let serviceOrder of serviceOrders" class="list-group" id="task-list">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
@@ -28,6 +28,11 @@
                     <br>
                 </ul>
             </div>
+            <ng-template #noServiceOrdersDisplay>
+                <div>
+                    <h5 class="text-center">No service orders to display</h5>
+                </div>
+            </ng-template>
         </div>
     </div>
 </main>
