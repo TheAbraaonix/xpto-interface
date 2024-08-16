@@ -23,4 +23,8 @@ export class ServiceOrderService {
     public create(serviceOrder: ServiceOrderInputModel): Observable<ServiceOrderViewModel> {
         return this.http.post<ServiceOrderViewModel>(`${this.urlApi}/CreateServiceOrder`, serviceOrder);
     }
+
+    public delete(id: string): Observable<any> {
+        return this.http.delete(`${this.urlApi}/DeleteServiceOrder/${id}`);
+    }
 }
