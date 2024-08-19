@@ -8,7 +8,7 @@
                 <div>
                     <label class="mandatory">*</label>
                     <label>Title:</label>
-                    <input type="text" class="form-control" placeholder="Enter service order title" formControlName="title" [value]="serviceOrder.serviceTitle"
+                    <input type="text" class="form-control" placeholder="Enter service order title" formControlName="title" [value]="serviceOrder.serviceTitle" minlength="1" maxlength="255"
                     [ngClass]="{
                         'border-success': updateForm.get('title')?.valid && updateForm.get('title')?.touched,
                         'border-danger': !updateForm.get('title')?.valid && updateForm.get('title')?.touched
@@ -34,7 +34,7 @@
                 <div>
                     <label class="mandatory">*</label>
                     <label>Value (R$):</label>
-                    <input type="number" class="form-control" placeholder="Enter service order value" formControlName="value" [value]="serviceOrder.serviceValue"
+                    <input type="number" class="form-control" placeholder="Enter service order value" formControlName="value" [value]="serviceOrder.serviceValue" min="1" max="10000"
                     [ngClass]="{
                         'border-success': updateForm.get('value')?.valid && updateForm.get('value')?.touched,
                         'border-danger': !updateForm.get('value')?.valid && updateForm.get('value')?.touched
