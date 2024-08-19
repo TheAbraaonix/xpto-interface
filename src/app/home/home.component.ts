@@ -15,6 +15,7 @@ import * as bootstrap from 'bootstrap';
 })
 export class HomeComponent implements OnInit {
   public serviceOrders: ServiceOrderViewModel[] = [];
+  public selectedServiceOrder: any;
   
   constructor(private serviceOrderService: ServiceOrderService) {}
   
@@ -37,5 +38,14 @@ export class HomeComponent implements OnInit {
       document.querySelectorAll('.modal-backdrop').forEach((backdrop) => backdrop.remove());
       window.location.reload();
     });
+  }
+
+  public openDeleteModal(serviceOrder: any): void {
+    this.selectedServiceOrder = serviceOrder;
+    const deleteModal = document.getElementById('deleteModal');
+    if (deleteModal) {
+      const modal = bootstrap.Modal.getOrCreateInstance(deleteModal);
+      modal?.show();
+    }
   }
 }
