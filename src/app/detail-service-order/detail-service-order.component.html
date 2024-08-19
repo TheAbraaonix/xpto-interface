@@ -6,14 +6,17 @@
             <div class="form-group mt-3">
                 <h5>Service order <b>#{{serviceOrder.serviceNumber}}</b> information:</h5>
                 <div>
+                    <label class="mandatory">*</label>
                     <label>Title:</label>
                     <input type="text" class="form-control" placeholder="Enter service order title" formControlName="title" [value]="serviceOrder.serviceTitle">
                 </div>
                 <div>
+                    <label class="mandatory">*</label>
                     <label>Date:</label>
                     <input type="date" class="form-control" placeholder="Enter service order date" formControlName="date" [value]="serviceOrder.serviceDate | date: 'yyyy-MM-dd'">
                 </div>
                 <div>
+                    <label class="mandatory">*</label>
                     <label>Value (R$):</label>
                     <input type="number" class="form-control" placeholder="Enter service order value" formControlName="value" [value]="serviceOrder.serviceValue">
                 </div>
@@ -23,10 +26,12 @@
                     <div class="col">
                         <h5>Client information:</h5>
                         <div>
+                            <label class="mandatory">*</label>
                             <label>CPF:</label>
                             <input type="text" class="form-control" placeholder="Enter client CPF" formControlName="clientCpf">
                         </div>
                         <div>
+                            <label class="mandatory">*</label>
                             <label>Name:</label>
                             <input type="text" class="form-control" placeholder="Enter client name" formControlName="clientName">
                         </div>
@@ -34,10 +39,12 @@
                     <div class="col">
                         <h5>Service executer information:</h5>
                         <div>
+                            <label class="mandatory">*</label>
                             <label>CNPJ:</label>
                             <input type="text" class="form-control" placeholder="Enter service executer CNPJ" formControlName="serviceExecuterCnpj">
                         </div>
                         <div>
+                            <label class="mandatory">*</label>
                             <label>Name:</label>
                             <input type="text" class="form-control" placeholder="Enter service executer name" formControlName="serviceExecuterName">
                         </div>
