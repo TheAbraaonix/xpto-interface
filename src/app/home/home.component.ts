@@ -21,7 +21,9 @@ export class HomeComponent implements OnInit {
   
   ngOnInit(): void {
     this.serviceOrderService.getAll().subscribe((response: any) => {
-      this.serviceOrders = response;
+      this.serviceOrders = response.sort((a: ServiceOrderViewModel, b: ServiceOrderViewModel) => {
+        return String(a.serviceNumber).localeCompare(String(b.serviceNumber));
+      });
     });
   }
 
