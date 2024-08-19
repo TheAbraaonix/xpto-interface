@@ -8,17 +8,38 @@
                     <div>
                         <label class="mandatory">*</label>
                         <label>Title:</label>
-                        <input type="text" class="form-control" placeholder="Enter service order title" formControlName="title">
+                        <input type="text" class="form-control" placeholder="Enter service order title" formControlName="title" 
+                        [ngClass]="{
+                            'border-success': newServiceOrderForm.get('title')?.valid && newServiceOrderForm.get('title')?.touched,
+                            'border-danger': !newServiceOrderForm.get('title')?.valid && newServiceOrderForm.get('title')?.touched
+                        }">
+                        <small *ngIf="!newServiceOrderForm.get('title')?.valid && newServiceOrderForm.get('title')?.touched"
+                            class="form-text text-danger">Invalid title
+                        </small>
                     </div>
                     <div>
                         <label class="mandatory">*</label>
                         <label class="mt-3">Date:</label>
-                        <input type="date" class="form-control" placeholder="Select service date" formControlName="date">
+                        <input type="date" class="form-control" placeholder="Select service date" formControlName="date"
+                        [ngClass]="{
+                            'border-success': newServiceOrderForm.get('date')?.valid && newServiceOrderForm.get('date')?.touched,
+                            'border-danger': !newServiceOrderForm.get('date')?.valid && newServiceOrderForm.get('date')?.touched
+                        }">
+                        <small *ngIf="!newServiceOrderForm.get('date')?.valid && newServiceOrderForm.get('date')?.touched"
+                            class="form-text text-danger">Invalid date
+                        </small>
                     </div>
                     <div>
                         <label class="mandatory">*</label>
                         <label class="mt-3">Value:</label>
-                        <input type="number" class="form-control" placeholder="Enter service value" min="0" formControlName="value">
+                        <input type="number" class="form-control" placeholder="Enter service value" min="0" formControlName="value"
+                        [ngClass]="{
+                            'border-success': newServiceOrderForm.get('value')?.valid && newServiceOrderForm.get('value')?.touched,
+                            'border-danger': !newServiceOrderForm.get('value')?.valid && newServiceOrderForm.get('value')?.touched
+                        }">
+                        <small *ngIf="!newServiceOrderForm.get('value')?.valid && newServiceOrderForm.get('value')?.touched"
+                            class="form-text text-danger">Invalid value
+                        </small>
                     </div>
                 </div>
                 <h5>Client information:</h5>
@@ -26,12 +47,28 @@
                     <div>
                         <label class="mandatory">*</label>
                         <label>CPF:</label>
-                        <input type="text" class="form-control" placeholder="Enter client CPF" formControlName="clientCpf" maxlength="11" minlength="11" (keydown)="onlyAllowNumbers($event)">
+                        <input type="text" class="form-control" placeholder="Enter client CPF" formControlName="clientCpf" maxlength="11" minlength="11" (keydown)="onlyAllowNumbers($event)"
+                        [ngClass]="{
+                            'border-success': newServiceOrderForm.get('clientCpf')?.valid && newServiceOrderForm.get('clientCpf')?.touched,
+                            'border-danger': !newServiceOrderForm.get('clientCpf')?.valid && newServiceOrderForm.get('clientCpf')?.touched
+                        }"
+                        >
+                        <small *ngIf="!newServiceOrderForm.get('clientCpf')?.valid && newServiceOrderForm.get('clientCpf')?.touched"
+                            class="form-text text-danger">Invalid CPF
+                        </small>
                     </div>
                     <div>
                         <label class="mandatory">*</label>
                         <label class="mt-3">Name:</label>
-                        <input type="text" class="form-control" placeholder="Enter client name" formControlName="clientName">
+                        <input type="text" class="form-control" placeholder="Enter client name" formControlName="clientName"
+                        [ngClass]="{
+                            'border-success': newServiceOrderForm.get('clientName')?.valid && newServiceOrderForm.get('clientName')?.touched,
+                            'border-danger': !newServiceOrderForm.get('clientName')?.valid && newServiceOrderForm.get('clientName')?.touched
+                        }"
+                        >
+                        <small *ngIf="!newServiceOrderForm.get('clientName')?.valid && newServiceOrderForm.get('clientName')?.touched"
+                            class="form-text text-danger">Invalid name
+                        </small>
                     </div>
                 </div>
                 <h5>Service executer information:</h5>
@@ -39,12 +76,26 @@
                     <div>
                         <label class="mandatory">*</label>
                         <label>CNPJ:</label>
-                        <input type="text" class="form-control" placeholder="Enter service executer CNPJ" formControlName="serviceExecuterCnpj" maxlength="14" minlength="14" (keydown)="onlyAllowNumbers($event)">
+                        <input type="text" class="form-control" placeholder="Enter service executer CNPJ" formControlName="serviceExecuterCnpj" maxlength="14" minlength="14" (keydown)="onlyAllowNumbers($event)"
+                        [ngClass]="{
+                            'border-success': newServiceOrderForm.get('serviceExecuterCnpj')?.valid && newServiceOrderForm.get('serviceExecuterCnpj')?.touched,
+                            'border-danger': !newServiceOrderForm.get('serviceExecuterCnpj')?.valid && newServiceOrderForm.get('serviceExecuterCnpj')?.touched
+                        }">
+                        <small *ngIf="!newServiceOrderForm.get('serviceExecuterCnpj')?.valid && newServiceOrderForm.get('serviceExecuterCnpj')?.touched"
+                            class="form-text text-danger">Invalid CNPJ
+                        </small>
                     </div>
                     <div>
                         <label class="mandatory">*</label>
                         <label class="mt-3">Name:</label>
-                        <input type="text" class="form-control" placeholder="Enter service executer name" formControlName="serviceExecuterName">
+                        <input type="text" class="form-control" placeholder="Enter service executer name" formControlName="serviceExecuterName"
+                        [ngClass]="{
+                            'border-success': newServiceOrderForm.get('serviceExecuterName')?.valid && newServiceOrderForm.get('serviceExecuterName')?.touched,
+                            'border-danger': !newServiceOrderForm.get('serviceExecuterName')?.valid && newServiceOrderForm.get('serviceExecuterName')?.touched
+                        }">
+                        <small *ngIf="!newServiceOrderForm.get('serviceExecuterName')?.valid && newServiceOrderForm.get('serviceExecuterName')?.touched"
+                            class="form-text text-danger">Invalid name
+                        </small>
                     </div>
                 </div>
                 <div class="mt-3 mb-5 d-flex justify-content-end">

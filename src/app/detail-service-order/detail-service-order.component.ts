@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router} from '@angular/router';
 import { ServiceOrderService } from '../services/service-order.service';
 import { ServiceOrderViewModel } from '../models/serviceOrder-view-model';
-import { CurrencyPipe, DatePipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe, NgIf } from '@angular/common';
 import * as bootstrap from 'bootstrap'; 
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServiceOrderUpdateInputModel } from '../models/serviceOrder-update-input-model';
 
 @Component({
   selector: 'app-detail-service-order',
   standalone: true,
-  imports: [CurrencyPipe, DatePipe, ReactiveFormsModule],
+  imports: [CurrencyPipe, DatePipe, ReactiveFormsModule, NgIf, FormsModule, CommonModule],
   providers: [ServiceOrderService, DatePipe],
   templateUrl: './detail-service-order.component.html',
   styleUrl: './detail-service-order.component.css'

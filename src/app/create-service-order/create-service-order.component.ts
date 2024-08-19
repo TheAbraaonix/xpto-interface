@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServiceOrderInputModel } from '../models/serviceOrder-input-model';
 import { ServiceOrderService } from '../services/service-order.service';
 import { ServiceOrderViewModel } from '../models/serviceOrder-view-model';
 import { Router } from '@angular/router';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-create-service-order',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf, FormsModule, CommonModule],
   providers: [ServiceOrderService],
   templateUrl: './create-service-order.component.html',
   styleUrl: './create-service-order.component.css'
