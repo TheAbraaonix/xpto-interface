@@ -15,21 +15,21 @@ import { Router } from '@angular/router';
 })
 export class CreateServiceOrderComponent {
   public serviceNumber: number = 0;
-  
+
   public newServiceOrderForm: FormGroup = new FormGroup({
     title: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]),
     value: new FormControl(null, [Validators.required]),
-    clientCpf: new FormControl(null, [Validators.required, Validators.maxLength(11), Validators.minLength(11)]),
+    clientCpf: new FormControl(null, [Validators.required, Validators.maxLength(11), Validators.minLength(11), Validators.pattern('^[0-9]*$')]),
     clientName: new FormControl(null, [Validators.required]),
-    serviceExecuterCnpj: new FormControl(null, [Validators.required, Validators.maxLength(14), Validators.minLength(14)]),
+    serviceExecuterCnpj: new FormControl(null, [Validators.required, Validators.maxLength(14), Validators.minLength(14), Validators.pattern('^[0-9]*$')]),
     serviceExecuterName: new FormControl(null, [Validators.required]),
   });
-  
+
   constructor(
     private serviceOrderService: ServiceOrderService,
     private router: Router
-  ) {}
+  ) { }
 
   public createServiceOrder(): void {
     let serviceOrder: ServiceOrderInputModel = new ServiceOrderInputModel();
@@ -43,7 +43,7 @@ export class CreateServiceOrderComponent {
     serviceOrder.serviceExecuter.name = this.newServiceOrderForm.get('serviceExecuterName')?.value;
 
     this.serviceNumber = serviceOrder.serviceNumber;
-    
+
     this.serviceOrderService.create(serviceOrder).subscribe({
       next: (response: ServiceOrderViewModel) => {
       }
@@ -52,6 +52,18 @@ export class CreateServiceOrderComponent {
 
   public generateRandomServiceOrderNumber(): number {
     return Math.floor(Math.random() * 9000) + 1000;
+  }
+
+  public onlyAllowNumbers(event: KeyboardEvent): void {
+    const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
+
+    if (allowedKeys.includes(event.key)) {
+      return;
+    }
+
+    if (!/^\d$/.test(event.key)) {
+      event.preventDefault();
+    }
   }
 
   public success(): void {

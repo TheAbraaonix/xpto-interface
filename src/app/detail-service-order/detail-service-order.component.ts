@@ -30,9 +30,9 @@ export class DetailServiceOrderComponent implements OnInit {
       title: new FormControl(null, [Validators.required]),
       date: new FormControl(null, [Validators.required]),
       value: new FormControl(null, [Validators.required]),
-      clientCpf: new FormControl(null, [Validators.required, Validators.maxLength(11), Validators.minLength(11)]),
+      clientCpf: new FormControl(null, [Validators.required, Validators.maxLength(11), Validators.minLength(11), Validators.pattern('^[0-9]*$')]),
       clientName: new FormControl(null, [Validators.required]),
-      serviceExecuterCnpj: new FormControl(null, [Validators.required, Validators.maxLength(14), Validators.minLength(14)]),
+      serviceExecuterCnpj: new FormControl(null, [Validators.required, Validators.maxLength(14), Validators.minLength(14), Validators.pattern('^[0-9]*$')]),
       serviceExecuterName: new FormControl(null, [Validators.required]),
     });
   }
@@ -106,6 +106,18 @@ export class DetailServiceOrderComponent implements OnInit {
       error: (error: any) => {
         console.log(error);
       }});
+  }
+
+  public onlyAllowNumbers(event: KeyboardEvent): void {
+    const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
+
+    if (allowedKeys.includes(event.key)) {
+      return;
+    }
+
+    if (!/^\d$/.test(event.key)) {
+      event.preventDefault();
+    }
   }
 
   public success(): void {
