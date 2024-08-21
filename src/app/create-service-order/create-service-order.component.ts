@@ -56,10 +56,15 @@ export class CreateServiceOrderComponent {
         if (error.error == "This CPF already exists in the database.") {
           this.errorMessage = "This CPF already exists in the database.";
           this.newServiceOrderForm.get('clientCpf')?.setErrors({ 'cpfExists': true });
-
-          const errorModal = new bootstrap.Modal(document.getElementById('errorModal')!);
-          errorModal.show();
         }
+
+        if (error.error == "This CNPJ already exists in the database.") {
+          this.errorMessage = "This CNPJ already exists in the database.";
+          this.newServiceOrderForm.get('serviceExecuterCnpj')?.setErrors({ 'cnpjExists': true });
+        }
+
+        const errorModal = new bootstrap.Modal(document.getElementById('errorModal')!);
+        errorModal.show();
       }
     });
   }
