@@ -6,6 +6,8 @@ import { ServiceOrderViewModel } from '../models/serviceOrder-view-model';
 import { Router } from '@angular/router';
 import { CommonModule, NgIf } from '@angular/common';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-create-service-order',
   standalone: true,
@@ -16,6 +18,7 @@ import { CommonModule, NgIf } from '@angular/common';
 })
 export class CreateServiceOrderComponent {
   public serviceNumber: number = 0;
+  public errorMessage: string = "";
 
   public newServiceOrderForm: FormGroup = new FormGroup({
     title: new FormControl(null, [Validators.required]),
@@ -43,10 +46,20 @@ export class CreateServiceOrderComponent {
     serviceOrder.serviceExecuter.cnpj = this.newServiceOrderForm.get('serviceExecuterCnpj')?.value;
     serviceOrder.serviceExecuter.name = this.newServiceOrderForm.get('serviceExecuterName')?.value;
 
-    this.serviceNumber = serviceOrder.serviceNumber;
-
     this.serviceOrderService.create(serviceOrder).subscribe({
       next: (response: ServiceOrderViewModel) => {
+        this.serviceNumber = response.serviceNumber;
+        const modal = new bootstrap.Modal(document.getElementById('successModal')!);
+        modal.show();
+      },
+      error: (error: any) => {
+        if (error.error == "This CPF already exists in the database.") {
+          this.errorMessage = "This CPF already exists in the database.";
+          this.newServiceOrderForm.get('clientCpf')?.setErrors({ 'cpfExists': true });
+
+          const errorModal = new bootstrap.Modal(document.getElementById('errorModal')!);
+          errorModal.show();
+        }
       }
     });
   }

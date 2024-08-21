@@ -99,24 +99,40 @@
                     </div>
                 </div>
                 <div class="mt-3 mb-5 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-success" [disabled]="!newServiceOrderForm.valid" data-bs-toggle="modal" data-bs-target="#confirmationCreateModal">Create</button>
+                    <button type="submit" class="btn btn-success" [disabled]="!newServiceOrderForm.valid">Create</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="confirmationCreateModal" tabindex="-1" aria-labelledby="confirmationCreateModal" aria-hidden="true">
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmationCreateModal">Create confirmation:</h5>
+                <h5 class="modal-title" id="successModal">Create confirmation:</h5>
             </div>
             <div class="modal-body">
                 Your service order with number <b>#{{ serviceNumber }}</b> was created successfully!
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="success()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="errorModal">ERROR:</h5>
+            </div>
+            <div class="modal-body">
+                <b>{{errorMessage}}</b>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
