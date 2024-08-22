@@ -5,14 +5,15 @@ import { ServiceOrderService } from '../services/service-order.service';
 import { ServiceOrderViewModel } from '../models/serviceOrder-view-model';
 import { Router } from '@angular/router';
 import { CommonModule, NgIf } from '@angular/common';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 declare var bootstrap: any;
 
 @Component({
   selector: 'app-create-service-order',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, FormsModule, CommonModule],
-  providers: [ServiceOrderService],
+  imports: [ReactiveFormsModule, NgIf, FormsModule, CommonModule, NgxMaskDirective, NgxMaskPipe],
+  providers: [ServiceOrderService, provideNgxMask()],
   templateUrl: './create-service-order.component.html',
   styleUrl: './create-service-order.component.css'
 })
