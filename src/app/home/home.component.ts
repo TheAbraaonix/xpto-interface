@@ -50,4 +50,32 @@ export class HomeComponent implements OnInit {
       modal?.show();
     }
   }
+
+  public filterByDate(type: string): void {
+    if (type === "oldest") {
+      this.serviceOrders = this.serviceOrders.sort((a: ServiceOrderViewModel, b: ServiceOrderViewModel) => {
+        return new Date(a.serviceDate).getTime() - new Date(b.serviceDate).getTime();
+      });
+    }
+
+    if (type === "newest") {
+      this.serviceOrders = this.serviceOrders.sort((a: ServiceOrderViewModel, b: ServiceOrderViewModel) => {
+        return new Date(b.serviceDate).getTime() - new Date(a.serviceDate).getTime();
+      });
+    }
+  }
+
+  public filterByValue(type: string): void {
+    if (type === "lowest") {
+      this.serviceOrders = this.serviceOrders.sort((a: ServiceOrderViewModel, b: ServiceOrderViewModel) => {
+        return a.serviceValue - b.serviceValue;
+      });
+    }
+
+    if (type === "highest") {
+      this.serviceOrders = this.serviceOrders.sort((a: ServiceOrderViewModel, b: ServiceOrderViewModel) => {
+        return b.serviceValue - a.serviceValue;
+      });
+    }
+  }
 }
