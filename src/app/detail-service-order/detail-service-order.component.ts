@@ -6,12 +6,13 @@ import { CommonModule, CurrencyPipe, DatePipe, NgIf } from '@angular/common';
 import * as bootstrap from 'bootstrap'; 
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServiceOrderUpdateInputModel } from '../models/serviceOrder-update-input-model';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-detail-service-order',
   standalone: true,
-  imports: [CurrencyPipe, DatePipe, ReactiveFormsModule, NgIf, FormsModule, CommonModule],
-  providers: [ServiceOrderService, DatePipe],
+  imports: [CurrencyPipe, DatePipe, ReactiveFormsModule, NgIf, FormsModule, CommonModule, NgxMaskDirective, NgxMaskPipe],
+  providers: [ServiceOrderService, DatePipe, provideNgxMask()],
   templateUrl: './detail-service-order.component.html',
   styleUrl: './detail-service-order.component.css'
 })
@@ -19,6 +20,7 @@ export class DetailServiceOrderComponent implements OnInit {
   public serviceOrder: ServiceOrderViewModel = new ServiceOrderViewModel();
   public updateForm: FormGroup;
   private initialFormValue: any;
+  public errorMessage: string = "";
   
   constructor(
     private route: ActivatedRoute,
@@ -30,7 +32,7 @@ export class DetailServiceOrderComponent implements OnInit {
       title: new FormControl(null, [Validators.required]),
       date: new FormControl(null, [Validators.required]),
       value: new FormControl(null, [Validators.required]),
-      clientCpf: new FormControl(null, [Validators.required, Validators.maxLength(11), Validators.minLength(11), Validators.pattern('^[0-9]*$')]),
+      clientCpf: new FormControl([null], [Validators.required, Validators.maxLength(11), Validators.minLength(11), Validators.pattern('^[0-9]*$')]),
       clientName: new FormControl(null, [Validators.required]),
       serviceExecuterCnpj: new FormControl(null, [Validators.required, Validators.maxLength(14), Validators.minLength(14), Validators.pattern('^[0-9]*$')]),
       serviceExecuterName: new FormControl(null, [Validators.required]),
@@ -55,9 +57,16 @@ export class DetailServiceOrderComponent implements OnInit {
           });
 
           this.initialFormValue = this.updateForm.value;
+          this.updateForm.get('clientCpf')?.disable();
+          this.updateForm.get('serviceExecuterCnpj')?.disable();
         },
         error: (error: any) => {
-          console.log(error);
+          if (error.error) {
+            this.errorMessage = "Something went wrong. Please, try again later.";
+          }
+  
+          const errorModal = new bootstrap.Modal(document.getElementById('errorModal')!);
+          errorModal.show();
         }
       })
     })
@@ -78,7 +87,12 @@ export class DetailServiceOrderComponent implements OnInit {
         this.router.navigate(["/"]);
       },
       error: (error: any) => {
-        console.log(error);
+        if (error.error) {
+          this.errorMessage = "Something went wrong. Please, try again later.";
+        }
+
+        const errorModal = new bootstrap.Modal(document.getElementById('errorModal')!);
+        errorModal.show();
       }
     });
   }
@@ -102,9 +116,16 @@ export class DetailServiceOrderComponent implements OnInit {
 
     this.serviceOrderService.update(this.serviceOrder.id, serviceOrderUpdateInputModel).subscribe({
       next: (response: any) => {
+        const modal = new bootstrap.Modal(document.getElementById('successModal')!);
+        modal.show();
       },
       error: (error: any) => {
-        console.log(error);
+        if (error.error) {
+          this.errorMessage = "Something went wrong. Please, try again later.";
+        }
+
+        const errorModal = new bootstrap.Modal(document.getElementById('errorModal')!);
+        errorModal.show();
       }});
   }
 

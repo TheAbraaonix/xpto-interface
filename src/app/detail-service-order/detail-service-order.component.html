@@ -52,7 +52,7 @@
                         <div>
                             <label class="mandatory">*</label>
                             <label>CPF:</label>
-                            <input type="text" class="form-control" placeholder="Enter client CPF" formControlName="clientCpf" maxlength="11" minlength="11" (keydown)="onlyAllowNumbers($event)"
+                            <input type="text" class="form-control" placeholder="Enter client CPF" formControlName="clientCpf" (keydown)="onlyAllowNumbers($event)" mask="000.000.000-00"
                             [ngClass]="{
                                 'border-success': updateForm.get('clientCpf')?.valid && updateForm.get('clientCpf')?.touched,
                                 'border-danger': !updateForm.get('clientCpf')?.valid && updateForm.get('clientCpf')?.touched
@@ -81,7 +81,7 @@
                         <div>
                             <label class="mandatory">*</label>
                             <label>CNPJ:</label>
-                            <input type="text" class="form-control" placeholder="Enter service executer CNPJ" formControlName="serviceExecuterCnpj" maxlength="14" minlength="14" (keydown)="onlyAllowNumbers($event)"
+                            <input type="text" class="form-control" placeholder="Enter service executer CNPJ" formControlName="serviceExecuterCnpj" (keydown)="onlyAllowNumbers($event)" mask="00.000.000/0000-00"
                             [ngClass]="{
                                 'border-success': updateForm.get('serviceExecuterCnpj')?.valid && updateForm.get('serviceExecuterCnpj')?.touched,
                                 'border-danger': !updateForm.get('serviceExecuterCnpj')?.valid && updateForm.get('serviceExecuterCnpj')?.touched
@@ -108,7 +108,7 @@
                 </div>
             </div>
             <div class="mb-5 mt-3 d-flex justify-content-end">
-                <button type="submit" class="btn btn-success" [disabled]="updateForm.untouched || isFormUnchanged() || !updateForm.valid" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button>
+                <button type="submit" class="btn btn-success" [disabled]="updateForm.untouched || isFormUnchanged() || !updateForm.valid">Update</button>
                 <span class="mx-2"></span>
                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
             </div>
@@ -145,6 +145,22 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="success()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="errorModal">ERROR:</h5>
+            </div>
+            <div class="modal-body">
+                <b>{{errorMessage}}</b>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
