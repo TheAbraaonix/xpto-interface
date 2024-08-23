@@ -110,7 +110,7 @@
             <div class="mb-5 mt-3 d-flex justify-content-end">
                 <button type="submit" class="btn btn-success" [disabled]="updateForm.untouched || isFormUnchanged() || !updateForm.valid">Update</button>
                 <span class="mx-2"></span>
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
             </div>
         </form>
         </div>
@@ -134,7 +134,7 @@
     </div>
 </div>
 
-<!-- <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModal" aria-hidden="true">
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -148,7 +148,7 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
 
 <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModal" aria-hidden="true">
     <div class="modal-dialog">

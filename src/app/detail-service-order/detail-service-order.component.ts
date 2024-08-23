@@ -115,8 +115,7 @@ export class DetailServiceOrderComponent implements OnInit {
 
     this.serviceOrderService.update(this.serviceOrder.id, serviceOrderUpdateInputModel).subscribe({
       next: (response: any) => {
-        // Navigating without success modal because it was causing unexpected behavior
-        this.success();
+        this.openSuccessModal();
       },
       error: (error: HttpErrorResponse) => {
         if (typeof error.error === 'string') {
@@ -136,6 +135,15 @@ export class DetailServiceOrderComponent implements OnInit {
         const errorModal = new bootstrap.Modal(document.getElementById('errorModal')!);
         errorModal.show();
       }});
+  }
+
+  public openSuccessModal(): void {
+    const successModal = document.getElementById("successModal");
+
+    if (successModal) {
+      const modal = new bootstrap.Modal(successModal);
+      modal.show();
+    }
   }
 
   public onlyAllowNumbers(event: KeyboardEvent): void {
