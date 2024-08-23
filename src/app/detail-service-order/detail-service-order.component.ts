@@ -74,7 +74,7 @@ export class DetailServiceOrderComponent implements OnInit {
   delete(): void {
     this.serviceOrderService.delete(this.serviceOrder.id).subscribe({
       next: (response: any) => {
-        const deleteModel = document.getElementById("deleteModel");
+        const deleteModel = document.getElementById("deleteModal");
 
         if (deleteModel) {
           const modal = new bootstrap.Modal(deleteModel);
