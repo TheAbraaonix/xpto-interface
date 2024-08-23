@@ -115,8 +115,8 @@ export class DetailServiceOrderComponent implements OnInit {
 
     this.serviceOrderService.update(this.serviceOrder.id, serviceOrderUpdateInputModel).subscribe({
       next: (response: any) => {
-        const modal = new bootstrap.Modal(document.getElementById('successModal')!);
-        modal.show();
+        // Navigating without success modal because it was causing unexpected behavior
+        this.success();
       },
       error: (error: HttpErrorResponse) => {
         if (typeof error.error === 'string') {
