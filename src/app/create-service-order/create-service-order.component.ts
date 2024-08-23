@@ -54,17 +54,17 @@ export class CreateServiceOrderComponent {
         modal.show();
       },
       error: (error: any) => {
-        if (error.error == "This CPF already exists in the database.") {
-          this.errorMessage = "This CPF already exists in the database. Please, enter a different CPF.";
-          this.newServiceOrderForm.get('clientCpf')?.setErrors({ 'cpfExists': true });
-        }
+        if (typeof error.error === 'string') {
+          if (error.error === "This CPF already exists in the database.") {
+            this.errorMessage = "This CPF already exists in the database. Please, enter a different CPF.";
+            this.newServiceOrderForm.get('clientCpf')?.setErrors({ 'cpfExists': true });
+          } 
+          else if (error.error === "This CNPJ already exists in the database.") {
+            this.errorMessage = "This CNPJ already exists in the database. Please, enter a different CNPJ.";
+            this.newServiceOrderForm.get('serviceExecuterCnpj')?.setErrors({ 'cnpjExists': true });
+          }
 
-        if (error.error == "This CNPJ already exists in the database.") {
-          this.errorMessage = "This CNPJ already exists in the database. Please, enter a different CNPJ.";
-          this.newServiceOrderForm.get('serviceExecuterCnpj')?.setErrors({ 'cnpjExists': true });
-        }
-
-        if (error.error) {
+        } else {
           this.errorMessage = "Something went wrong. Please, try again later.";
         }
 

@@ -7,6 +7,7 @@ import * as bootstrap from 'bootstrap';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServiceOrderUpdateInputModel } from '../models/serviceOrder-update-input-model';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-detail-service-order',
@@ -57,8 +58,6 @@ export class DetailServiceOrderComponent implements OnInit {
           });
 
           this.initialFormValue = this.updateForm.value;
-          this.updateForm.get('clientCpf')?.disable();
-          this.updateForm.get('serviceExecuterCnpj')?.disable();
         },
         error: (error: any) => {
           if (error.error) {
@@ -119,11 +118,21 @@ export class DetailServiceOrderComponent implements OnInit {
         const modal = new bootstrap.Modal(document.getElementById('successModal')!);
         modal.show();
       },
-      error: (error: any) => {
-        if (error.error) {
+      error: (error: HttpErrorResponse) => {
+        if (typeof error.error === 'string') {
+          if (error.error === "This CPF already exists in the database.") {
+            this.errorMessage = "This CPF already exists in the database. Please, enter a different CPF.";
+            this.updateForm.get('clientCpf')?.setErrors({ 'cpfExists': true });
+          } 
+          else if (error.error === "This CNPJ already exists in the database.") {
+            this.errorMessage = "This CNPJ already exists in the database. Please, enter a different CNPJ.";
+            this.updateForm.get('serviceExecuterCnpj')?.setErrors({ 'cnpjExists': true });
+          }
+
+        } else {
           this.errorMessage = "Something went wrong. Please, try again later.";
         }
-
+    
         const errorModal = new bootstrap.Modal(document.getElementById('errorModal')!);
         errorModal.show();
       }});
